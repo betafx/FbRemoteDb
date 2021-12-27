@@ -10,7 +10,7 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-internal class RemoteUserFireDbImpl(private val version: String) {
+internal class RemoteUserBuckets(private val version: String) {
 
     private val database = Firebase.database
 

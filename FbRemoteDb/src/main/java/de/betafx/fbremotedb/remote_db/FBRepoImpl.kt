@@ -16,7 +16,7 @@ internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>, versi
 
     private val remoteBuckets = RemoteBuckets<T>(version)
 
-    private val userBuckets = RemoteUserFireDbImpl(version)
+    private val userBuckets = RemoteUserBuckets(version)
 
     suspend fun deleteBucketForUser(name: String): Boolean {
         // check for existing in user repo
