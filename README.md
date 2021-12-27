@@ -110,7 +110,7 @@ plugins {
     id 'com.google.gms.google-services'
 }
 dependencies {
-    implementation 'com.github.betafx:FbRemoteDb:0.8.1-alpha'
+    implementation 'com.github.betafx:FbRemoteDb:{latest_version}}'
 }
 ```
 
