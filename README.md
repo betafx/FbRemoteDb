@@ -1,9 +1,11 @@
 # FbRemoteDb
 
+[![](https://jitpack.io/v/betafx/FbRemoteDb.svg)](https://jitpack.io/#betafx/FbRemoteDb)
+
 Simple access to Firebase Realtime Database.
 
 Everything is inside a Bucket, there you can store your items. This is for simplifying the access to
-your data..
+your data.
 
 You can create a Bucket with a name, a password and a list of BucketItem. You can join a Bucket with
 a name, a password.
@@ -14,9 +16,11 @@ a name, a password.
 
 [3. Limitations](#limitationsofmodule)
 
-[4. Last words](#lastwords)
+[4. Troubleshooting](#troubleshootingofmodule)
 
-[5. License](#licenseofmodule)
+[5. Last words](#lastwords)
+
+[6. License](#licenseofmodule)
 
 <a name="howtouseincode"></a>
 
@@ -84,33 +88,98 @@ suspend fun getTAsFlow(name: String, id: String): Flow<T>?
 
 ```gradle
 pluginManagement {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
     plugins {
         id 'com.google.gms.google-services' version '4.3.10'
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        maven { url "https://jitpack.io" }
     }
 }
 ```
 
 2. Add following to ``app/build.gradle``:
-3. x
-4. x
+
+```gradle
+plugins {
+    id 'com.google.gms.google-services'
+}
+dependencies {
+    implementation 'com.github.betafx:FbRemoteDb:0.8.0-alpha'
+}
+```
+
+3. Register your app on https://console.firebase.google.com. Download google-services.json into
+   project.
+
+4. Create a new Realtime Database on https://console.firebase.google.com. Change the rules to this:
+
+```json
+{
+  "rules": {
+    ".read": "false",
+    ".write": "false",
+    "user": {
+      ".read": "false",
+      ".write": "false",
+      "$user_id": {
+        ".write": "$user_id === auth.uid",
+        ".read": "$user_id === auth.uid"
+      }
+    },
+    "buckets": {
+      ".read": "false",
+      ".write": "false",
+      "$bucket": {
+        ".read": "false",
+        ".write": "false",
+        "$pw": {
+          ".read": "auth.uid != null",
+          ".write": "auth.uid != null"
+        }
+      }
+    }
+  }
+}
+```
 
 <a name="limitationsofmodule"></a>
 
 ## Limitations
 
-* No login, the right user has to be logged in or nothing will work.
-* No server-side validation of data
-* No encryption of the data stored on the Firebase-Server, which is visible for you. Implement your
-  custom encryption and store the key on the device.
+* Do not use this for sensitive data, seriously.
+* No login mechanism, the right user has to be logged in or nothing will work.
+* No server-side validation of data.
+* No encryption of the data stored on the Firebase-Server. Data in database is visible for you.
+  Implement your custom encryption and store the key on the device.
 * Do not edit the database online on https://console.firebase.google.com, I don't know what will
   happen. Maybe your app will crash.
+
+<a name="troubleshootingofmodule"></a>
+
+## Troubleshooting
+
+```
+java.lang.IllegalStateException: Default FirebaseApp is not initialized in this process com.app.myapplication. Make sure to call FirebaseApp.initializeApp(Context) first.
+```
+
+You forgot to add `id 'com.google.gms.google-services'` in ``app/build.gradle``.
+
+```
+Execution failed for task ':app:processDebugGoogleServices'.
+> File google-services.json is missing. The Google Services Plugin cannot function without it.
+```
+
+See step 3 in "How to setup project"
 
 <a name="lastwords"></a>
 
 ## Last words
+
+I was annoyed to move the same code over again, when using it in my own projects, so I decided to
+move it here. I am happy if you contribute, fork, clone or whatever to this repo, also opening
+issues is really appreciated. Feel free to contact my and happy coding :)
 
 <a name="licenseofmodule"></a>
 
