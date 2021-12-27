@@ -10,14 +10,17 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-internal object RemoteUserFireDbImpl {
+internal class RemoteUserFireDbImpl(private val version: String) {
 
     private val database = Firebase.database
 
     private val userDatabase
-        get() = database.getReference("user").child(
-            FirebaseAuth.getInstance().uid ?: throw NoUidException()
-        )
+        get() = database
+            .getReference("user")
+            .child(
+                FirebaseAuth.getInstance().uid ?: throw NoUidException()
+            )
+            .child(version)
 
     private val userBucketDatabase = userDatabase.child("buckets")
 

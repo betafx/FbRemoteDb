@@ -14,11 +14,11 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-internal class RemoteBuckets<T> {
+internal class RemoteBuckets<T>(version: String) {
 
     private val database = Firebase.database
 
-    private val bucketDatabase = database.getReference("buckets")
+    private val bucketDatabase = database.getReference("buckets").child(version)
 
 
     suspend fun bucketExists(bucketReference: BucketReference): Boolean =
