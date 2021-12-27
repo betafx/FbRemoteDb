@@ -112,8 +112,37 @@ dependencies {
 
 3. Register your app on https://console.firebase.google.com. Download google-services.json into
    project.
-   
-4. x
+
+4. Create a new Realtime Database on https://console.firebase.google.com. Change the rules to this:
+
+```json
+{
+  "rules": {
+    ".read": "false",
+    ".write": "false",
+    "user": {
+      ".read": "false",
+      ".write": "false",
+      "$user_id": {
+        ".write": "$user_id === auth.uid",
+        ".read": "$user_id === auth.uid"
+      }
+    },
+    "buckets": {
+      ".read": "false",
+      ".write": "false",
+      "$bucket": {
+        ".read": "false",
+        ".write": "false",
+        "$pw": {
+          ".read": "auth.uid != null",
+          ".write": "auth.uid != null"
+        }
+      }
+    }
+  }
+}
+```
 
 <a name="limitationsofmodule"></a>
 
