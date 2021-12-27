@@ -1,5 +1,7 @@
 # FbRemoteDb
 
+[![](https://jitpack.io/v/betafx/FbRemoteDb.svg)](https://jitpack.io/#betafx/FbRemoteDb)
+
 Simple access to Firebase Realtime Database.
 
 Everything is inside a Bucket, there you can store your items. This is for simplifying the access to
