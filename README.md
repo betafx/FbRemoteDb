@@ -122,6 +122,10 @@ java.lang.IllegalStateException: Default FirebaseApp is not initialized in this 
 
 ## Last words
 
+I was annoyed to move the same code over again, when using it in my own projects, so I decided to
+move it here. I am happy if you contribute, fork, clone or whatever to this repo, also opening
+issues is really appreciated. Feel free to contact my and happy coding :)
+
 <a name="licenseofmodule"></a>
 
 ## License
