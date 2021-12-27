@@ -11,7 +11,7 @@ internal data class BucketReference(
     constructor() : this("", "")
 
     fun toMutableMap() = mapOf(
-        "title" to name,
+        "name" to name,
         "password" to password
     )
 }
