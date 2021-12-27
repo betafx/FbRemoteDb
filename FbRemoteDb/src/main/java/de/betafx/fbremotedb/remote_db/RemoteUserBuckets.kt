@@ -20,9 +20,10 @@ internal class RemoteUserBuckets(private val version: String) {
             .child(
                 FirebaseAuth.getInstance().uid ?: throw NoUidException()
             )
-            .child(version)
 
-    private val userBucketDatabase = userDatabase.child("buckets")
+    private val userBucketDatabase = userDatabase
+        .child("buckets")
+        .child(version)
 
     @Throws(NoUidException::class)
     suspend fun getPrivateBucketReferences(): List<BucketReference> =
