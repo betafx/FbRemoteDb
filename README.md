@@ -39,7 +39,11 @@ Now you can get the repository and use it, e.g. in a ViewModel.
 
 ```kotlin
 class AViewModel : ViewModel() {
-    private val fbRepo by lazy { FBRepo(MyData::class.java) }
+    private val fbRepo by lazy {
+        FbRemoteDb(MyData::class.java).apply {
+            version = "1" // Optional
+        }
+    }
 
     fun createBuckets() {
         viewModelScope.launch {
