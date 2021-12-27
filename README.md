@@ -3,7 +3,7 @@
 Simple access to Firebase Realtime Database.
 
 Everything is inside a Bucket, there you can store your items. This is for simplifying the access to
-your data..
+your data.
 
 You can create a Bucket with a name, a password and a list of BucketItem. You can join a Bucket with
 a name, a password.
@@ -105,8 +105,8 @@ pluginManagement {
 
 * No login, the right user has to be logged in or nothing will work.
 * No server-side validation of data.
-* No encryption of the data stored on the Firebase-Server, which is visible for you. Implement your
-  custom encryption and store the key on the device.
+* No encryption of the data stored on the Firebase-Server. Data in database is visible for you.
+  Implement your custom encryption and store the key on the device.
 * Do not edit the database online on https://console.firebase.google.com, I don't know what will
   happen. Maybe your app will crash.
 
