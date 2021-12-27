@@ -110,7 +110,9 @@ dependencies {
 }
 ```
 
-3. x
+3. Register your app on https://console.firebase.google.com. Download google-services.json into
+   project.
+   
 4. x
 
 <a name="limitationsofmodule"></a>
@@ -133,6 +135,13 @@ java.lang.IllegalStateException: Default FirebaseApp is not initialized in this 
 ```
 
 You forgot to add `id 'com.google.gms.google-services'` in ``app/build.gradle``.
+
+```
+Execution failed for task ':app:processDebugGoogleServices'.
+> File google-services.json is missing. The Google Services Plugin cannot function without it.
+```
+
+See step 3 in "How to setup project"
 
 <a name="lastwords"></a>
 
