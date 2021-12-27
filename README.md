@@ -14,9 +14,11 @@ a name, a password.
 
 [3. Limitations](#limitationsofmodule)
 
-[4. Last words](#lastwords)
+[4. Troubleshooting](#troubleshootingofmodule)
 
-[5. License](#licenseofmodule)
+[5. Last words](#lastwords)
+
+[6. License](#licenseofmodule)
 
 <a name="howtouseincode"></a>
 
@@ -102,11 +104,19 @@ pluginManagement {
 ## Limitations
 
 * No login, the right user has to be logged in or nothing will work.
-* No server-side validation of data
+* No server-side validation of data.
 * No encryption of the data stored on the Firebase-Server, which is visible for you. Implement your
   custom encryption and store the key on the device.
 * Do not edit the database online on https://console.firebase.google.com, I don't know what will
   happen. Maybe your app will crash.
+
+<a name="troubleshootingofmodule"></a>
+
+## Troubleshooting
+
+```
+java.lang.IllegalStateException: Default FirebaseApp is not initialized in this process com.app.myapplication. Make sure to call FirebaseApp.initializeApp(Context) first.
+```
 
 <a name="lastwords"></a>
 
