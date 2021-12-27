@@ -1,0 +1,2 @@
+include ':app', ':FbRemoteDb'
+rootProject.name='FbRemoteDbExample'

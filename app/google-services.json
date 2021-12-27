@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1054582753023",
+    "project_id": "fbremotedb-example",
+    "storage_bucket": "fbremotedb-example.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1054582753023:android:b25a57a3f1a3218fe9aeca",
+        "android_client_info": {
+          "package_name": "de.betafx.fbremotedb.demo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1054582753023-cvfca864odk5glvr7mhuh1sfnpt8h5os.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVN3u7l2wOYD8qyQqdB0H8TvG5ScnWDMM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1054582753023-cvfca864odk5glvr7mhuh1sfnpt8h5os.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
