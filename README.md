@@ -102,6 +102,9 @@ dependencyResolutionManagement {
 2. Add following to ``app/build.gradle``:
 
 ```gradle
+plugins {
+    id 'com.google.gms.google-services'
+}
 dependencies {
     implementation 'com.github.betafx:FbRemoteDb:0.8.0-alpha'
 }
@@ -128,6 +131,8 @@ dependencies {
 ```
 java.lang.IllegalStateException: Default FirebaseApp is not initialized in this process com.app.myapplication. Make sure to call FirebaseApp.initializeApp(Context) first.
 ```
+
+You forgot to add `id 'com.google.gms.google-services'` in ``app/build.gradle``.
 
 <a name="lastwords"></a>
 
