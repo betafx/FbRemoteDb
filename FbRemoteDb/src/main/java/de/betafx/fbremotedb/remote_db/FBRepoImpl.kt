@@ -12,25 +12,25 @@ import kotlinx.coroutines.flow.filterNotNull
 import java.security.MessageDigest
 
 
-internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>) {
+internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>, version: String) {
 
-    private val remoteBuckets = RemoteBuckets<T>()
+    private val remoteBuckets = RemoteBuckets<T>(version)
+
+    private val userBuckets = RemoteUserBuckets(version)
 
     suspend fun deleteBucketForUser(name: String): Boolean {
         // check for existing in user repo
-        if (!RemoteUserFireDbImpl.bucketExists(name)) return true
-        return RemoteUserFireDbImpl.deleteBucket(name)
+        if (!userBuckets.bucketExists(name)) return true
+        return userBuckets.deleteBucket(name)
     }
 
     suspend fun fetchBucketsList(): List<Bucket<T>> {
-        val userBucketsList = RemoteUserFireDbImpl.getPrivateBucketReferences()
+        val userBucketsList = userBuckets.getPrivateBucketReferences()
         val list = mutableListOf<BucketInternal<T>>()
         userBucketsList.forEach { bucketReference ->
-//            if (remoteBuckets.bucketExists(bucketReference)) {
             remoteBuckets.getBucketWithRef(bucketReference, clazz)?.let {
                 list.add(it)
             }
-//            }
         }
         return list.map { bucketInternal ->
             Bucket(content = bucketInternal.content)
@@ -39,7 +39,7 @@ internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>) {
     }
 
     suspend fun fetchBucket(name: String): Bucket<T>? {
-        val userBucketsList = RemoteUserFireDbImpl.getPrivateBucketReferences()
+        val userBucketsList = userBuckets.getPrivateBucketReferences()
         val bucketReference = userBucketsList.firstOrNull { it.name == name } ?: return null
         val bucketInternal = remoteBuckets.getBucketWithRef(bucketReference, clazz) ?: return null
         return Bucket(content = bucketInternal.content).apply { this.name = bucketInternal.name }
@@ -47,7 +47,7 @@ internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>) {
     }
 
     suspend fun updateBucket(name: String, bucket: Bucket<T>): Boolean {
-        val userBucketsList = RemoteUserFireDbImpl.getPrivateBucketReferences()
+        val userBucketsList = userBuckets.getPrivateBucketReferences()
         val list = mutableListOf<Pair<BucketReference, BucketInternal<T>>>()
         userBucketsList.forEach { bucketReference ->
             if (remoteBuckets.bucketExists(bucketReference)) {
@@ -72,9 +72,9 @@ internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>) {
         // check for existing remote
         if (remoteBuckets.bucketExists(bucketReference)) return false
         // check for existing in user repo
-        if (RemoteUserFireDbImpl.bucketExists(bucketReference)) return false
+        if (userBuckets.bucketExists(bucketReference)) return false
         // create in user db
-        if (!RemoteUserFireDbImpl.storePrivateBucketReference(bucketReference)) return false
+        if (!userBuckets.storePrivateBucketReference(bucketReference)) return false
         // create public bucket
         return remoteBuckets.createBucketWithRef(
             bucketReference, BucketInternal(name, bucket.content)
@@ -86,18 +86,18 @@ internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>) {
         // check for existing remote
         if (!remoteBuckets.bucketExists(bucketReference)) return false
         // check for existing in user repo
-        if (RemoteUserFireDbImpl.bucketExists(bucketReference)) return false
-        return RemoteUserFireDbImpl.storePrivateBucketReference(bucketReference)
+        if (userBuckets.bucketExists(bucketReference)) return false
+        return userBuckets.storePrivateBucketReference(bucketReference)
     }
 
     suspend fun getBucketAsFlow(name: String): Flow<Bucket<T>>? {
-        val userBucketsList = RemoteUserFireDbImpl.getPrivateBucketReferences()
+        val userBucketsList = userBuckets.getPrivateBucketReferences()
         val bucketReference = userBucketsList.firstOrNull { it.name == name } ?: return null
         return remoteBuckets.getBucketAsFlow(bucketReference, clazz)
     }
 
     suspend fun getTAsFlow(name: String, id: String): Flow<T>? {
-        val userBucketsList = RemoteUserFireDbImpl.getPrivateBucketReferences()
+        val userBucketsList = userBuckets.getPrivateBucketReferences()
         val bucketReference = userBucketsList.firstOrNull { it.name == name } ?: return null
         return remoteBuckets.getTAsFlow(bucketReference, clazz)
             ?.filterNotNull()

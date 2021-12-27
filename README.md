@@ -134,9 +134,13 @@ dependencies {
       "$bucket": {
         ".read": "false",
         ".write": "false",
-        "$pw": {
-          ".read": "auth.uid != null",
-          ".write": "auth.uid != null"
+        "$version": {
+          ".read": "false",
+          ".write": "false",
+          "$pw": {
+            ".read": "auth.uid != null",
+            ".write": "auth.uid != null"
+          }
         }
       }
     }

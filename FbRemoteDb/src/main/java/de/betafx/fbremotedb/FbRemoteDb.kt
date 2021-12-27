@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 
 class FbRemoteDb<T : BucketItem>(clazz: Class<T>) {
 
-    private val repo = FbRemoteDbImpl(clazz)
+    var version: String = "initial_version"
+
+    private val repo = FbRemoteDbImpl(clazz, version)
 
     @Throws(NoUidException::class)
     suspend fun deleteBucketForUser(name: String): Boolean =
