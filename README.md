@@ -88,16 +88,25 @@ suspend fun getTAsFlow(name: String, id: String): Flow<T>?
 
 ```gradle
 pluginManagement {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
     plugins {
         id 'com.google.gms.google-services' version '4.3.10'
+    }
+}
+dependencyResolutionManagement {
+    repositories {
+        maven { url "https://jitpack.io" }
     }
 }
 ```
 
 2. Add following to ``app/build.gradle``:
+
+```gradle
+dependencies {
+    implementation 'com.github.betafx:FbRemoteDb:0.8.0-alpha'
+}
+```
+
 3. x
 4. x
 
