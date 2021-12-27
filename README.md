@@ -148,7 +148,8 @@ dependencies {
 
 ## Limitations
 
-* No login, the right user has to be logged in or nothing will work.
+* Do not use this for sensitive data, seriously.
+* No login mechanism, the right user has to be logged in or nothing will work.
 * No server-side validation of data.
 * No encryption of the data stored on the Firebase-Server. Data in database is visible for you.
   Implement your custom encryption and store the key on the device.
