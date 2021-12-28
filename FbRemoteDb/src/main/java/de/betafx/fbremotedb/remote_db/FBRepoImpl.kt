@@ -47,18 +47,10 @@ internal class FbRemoteDbImpl<T : BucketItem>(private val clazz: Class<T>, versi
     }
 
     suspend fun updateBucket(name: String, bucket: Bucket<T>): Boolean {
-        val userBucketsList = userBuckets.getPrivateBucketReferences()
-        val list = mutableListOf<Pair<BucketReference, BucketInternal<T>>>()
-        userBucketsList.forEach { bucketReference ->
-            if (remoteBuckets.bucketExists(bucketReference)) {
-                remoteBuckets.getBucketWithRef(bucketReference, clazz)?.let {
-                    list.add(Pair(bucketReference, it))
-                }
-            }
-        }
-        val remoteBucketPair = list.firstOrNull { it.first.name == name } ?: return false
+        val userBucketReference =
+            userBuckets.getPrivateBucketReferences().firstOrNull { it.name == name } ?: return false
         return remoteBuckets.createBucketWithRef(
-            remoteBucketPair.first,
+            userBucketReference,
             BucketInternal(name, bucket.content)
         )
     }
