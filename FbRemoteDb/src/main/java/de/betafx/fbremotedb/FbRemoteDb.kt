@@ -4,9 +4,9 @@ import de.betafx.fbremotedb.remote_db.FbRemoteDbImpl
 import de.betafx.fbremotedb.remote_db.models.Bucket
 import kotlinx.coroutines.flow.Flow
 
-class FbRemoteDb<T : BucketItem>(clazz: Class<T>) {
+class FbRemoteDb<T : BucketItem>(clazz: Class<T>, name: String) {
 
-    var version: String = "initial_version"
+    var version: String = name
 
     private val repo = FbRemoteDbImpl(clazz, version)
 
